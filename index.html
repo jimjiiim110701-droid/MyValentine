@@ -9,22 +9,32 @@
 * { box-sizing: border-box; margin:0; padding:0; }
 
 body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* move envelope down a bit */
-  padding-top: 60px; /* space from top on mobile */
-  font-family: 'Poppins', sans-serif;
-  overflow-x: hidden;
+  align-items: center; /* vertical center */
+  overflow: hidden;
   position: relative;
-  background: linear-gradient(135deg, #ff758c, #ff7eb3);
-  animation: bgShift 20s infinite alternate;
+}
+
+.container {
+  position: relative;
+  z-index: 999;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .envelope {
-  width: 90vw; /* bigger on mobile */
+  width: 85vw;       /* bigger and responsive */
   max-width: 420px;
-  height: 55vw; /* maintain envelope ratio */
+  height: 50vw;      /* keep ratio */
   max-height: 260px;
   background: linear-gradient(145deg, #fff0f5, #ffe6f0);
   border-radius: 25px;
@@ -35,12 +45,38 @@ body {
   align-items: center;
   color: #ff5f9e;
   font-weight: bold;
-  font-size: 5vw; /* scale text for mobile */
+  font-size: 5vw;    /* scales on mobile */
   box-shadow: 0 15px 45px rgba(0,0,0,0.35);
-  transition: transform 1.5s, box-shadow 0.5s;
-  z-index: 999; /* always on top */
   border: 3px dashed #ffb6c1;
   overflow: hidden;
+  z-index: 1000;     /* always above everything */
+}
+
+/* Envelope flap */
+.envelope::before {
+  content: "";
+  position: absolute;
+  top: -100px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(135deg, #ffe6f0, #ffb6c1);
+  clip-path: polygon(0 100%, 50% 0, 100% 100%);
+  transform-origin: top center;
+  transition: transform 2s ease;
+  z-index: 2;
+  border-bottom: 3px dashed #ffb6c1;
+  box-shadow: 0 5px 15px rgba(255,255,255,0.3) inset;
+}
+
+.envelope.open::before {
+  transform: rotateX(180deg);
+}
+
+.envelope.open {
+  transform: translateY(-30vh) scale(0.85);
+  opacity: 0;
+  transition: all 1.5s ease;
 }
 
 /* Envelope */
