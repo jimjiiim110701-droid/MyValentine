@@ -10,15 +10,15 @@
 
 body {
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start; /* envelope visible on top */
   font-family: 'Poppins', sans-serif;
+  overflow: hidden;
+  position: relative;
   background: linear-gradient(135deg, #ff758c, #ff7eb3);
   animation: bgShift 20s infinite alternate;
-  padding-top: 5vh; /* space on top for mobile */
-  overflow-x: hidden;
-  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* start from top */
+  padding-top: 50px; /* space from top */
 }
 
 @keyframes bgShift {
@@ -29,34 +29,34 @@ body {
 
 /* Envelope */
 .envelope {
-  width: 85vw;
+  width: 90vw;  /* responsive width */
   max-width: 420px;
-  height: auto;
-  aspect-ratio: 21/13;
+  height: 260px;
   background: linear-gradient(145deg, #fff0f5, #ffe6f0);
   border-radius: 25px;
+  position: relative;
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 6vw;
-  font-weight: bold;
   color: #ff5f9e;
+  font-weight: bold;
+  font-size: 1.6rem;
   box-shadow: 0 15px 45px rgba(0,0,0,0.35);
+  transition: transform 1.5s, box-shadow 0.5s;
+  z-index: 3;
   border: 3px dashed #ffb6c1;
-  cursor: pointer;
-  z-index: 1000;
   overflow: hidden;
-  position: relative;
 }
 
 /* Envelope flap */
 .envelope::before {
   content: "";
   position: absolute;
-  top: -20%;
+  top: -100px;
   left: 0;
   width: 100%;
-  height: 40%;
+  height: 100px;
   background: linear-gradient(135deg, #ffe6f0, #ffb6c1);
   clip-path: polygon(0 100%, 50% 0, 100% 100%);
   transform-origin: top center;
@@ -88,6 +88,7 @@ body {
 /* Card */
 .card {
   max-width: 850px;
+  width: 90vw; /* responsive */
   background: rgba(255, 255, 255, 0.28);
   backdrop-filter: blur(12px);
   padding: 50px 40px;
@@ -102,6 +103,7 @@ body {
   text-align: center;
   position: relative;
   overflow: hidden;
+  margin-top: 20px; /* small spacing from envelope */
 }
 
 .card.show {
@@ -183,6 +185,17 @@ body {
 .heartSparkle { font-size:18px; animation: sparkleAnim linear infinite; }
 @keyframes sparkleAnim { 0%{transform:translateY(0) scale(1); opacity:1;} 100%{transform:translateY(-120px) scale(0.5); opacity:0;} }
 
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .envelope {
+    width: 80vw;
+    height: 220px;
+    font-size: 6vw;
+  }
+  .card {
+    padding: 30px 20px;
+  }
+}
 </style>
 </head>
 <body>
@@ -219,7 +232,6 @@ const card = document.getElementById('card');
 const message = document.getElementById('message');
 const flowersBtn = document.getElementById('flowersBtn');
 
-// Envelope click → flap opens + show card + heart explosion
 envelope.addEventListener('click', () => {
   envelope.classList.add('open');
   setTimeout(() => {
@@ -228,11 +240,10 @@ envelope.addEventListener('click', () => {
     spawnHearts();
     spawnSparkles();
     spawnHeartExplosion();
-    spawnFloatingWords(); // NEW MAGIC WORDS
-  }, 1500); // slower for drama
+    spawnFloatingWords();
+  }, 1500);
 });
 
-// Line by line fade-in
 function animateMessage() {
   const text = message.innerHTML;
   const parts = text.split(/(<br>)/g);
@@ -245,7 +256,6 @@ function animateMessage() {
   });
 }
 
-// Floating hearts automatically
 function spawnHearts() {
   setInterval(() => {
     const heart = document.createElement('div');
@@ -259,7 +269,6 @@ function spawnHearts() {
   }, 500);
 }
 
-// Floating sparkles
 function spawnSparkles() {
   setInterval(() => {
     const sparkle = document.createElement('div');
@@ -273,7 +282,6 @@ function spawnSparkles() {
   }, 200);
 }
 
-// Heart explosion when card shows
 function spawnHeartExplosion() {
   for(let i=0;i<20;i++){
     const h = document.createElement('div');
@@ -289,7 +297,6 @@ function spawnHeartExplosion() {
   }
 }
 
-// Floating magical words inside card
 function spawnFloatingWords() {
   const words = ['LOVE','Pampaaam','💖','💘','My Love','Forever'];
   setInterval(()=>{
@@ -309,7 +316,6 @@ function spawnFloatingWords() {
   }, 400);
 }
 
-// Button click → massive flowers + hearts
 flowersBtn.addEventListener('click', () => {
   const flowers = ['🌸','🌹','🌷','🌺','💐','💖','✨'];
   for (let i = 0; i < 60; i++) {
