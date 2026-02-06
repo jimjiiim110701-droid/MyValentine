@@ -12,18 +12,35 @@ body {
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; /* move envelope down a bit */
+  padding-top: 60px; /* space from top on mobile */
   font-family: 'Poppins', sans-serif;
-  overflow: hidden;
+  overflow-x: hidden;
   position: relative;
   background: linear-gradient(135deg, #ff758c, #ff7eb3);
   animation: bgShift 20s infinite alternate;
 }
 
-@keyframes bgShift {
-  0% { background: linear-gradient(135deg, #ff758c, #ff7eb3);}
-  50% { background: linear-gradient(135deg, #ff9abc, #ff6ab3);}
-  100% { background: linear-gradient(135deg, #ff758c, #ff7eb3);}
+.envelope {
+  width: 90vw; /* bigger on mobile */
+  max-width: 420px;
+  height: 55vw; /* maintain envelope ratio */
+  max-height: 260px;
+  background: linear-gradient(145deg, #fff0f5, #ffe6f0);
+  border-radius: 25px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ff5f9e;
+  font-weight: bold;
+  font-size: 5vw; /* scale text for mobile */
+  box-shadow: 0 15px 45px rgba(0,0,0,0.35);
+  transition: transform 1.5s, box-shadow 0.5s;
+  z-index: 999; /* always on top */
+  border: 3px dashed #ffb6c1;
+  overflow: hidden;
 }
 
 /* Envelope */
